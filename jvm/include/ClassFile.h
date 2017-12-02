@@ -152,7 +152,7 @@ typedef struct field_info {
 	u2				descriptor_index;
 	u2				attributes_count;
 	// attributes[attributes_count]
-	attribute_info	*attributes;
+	attribute_info	**attributes;
 } field_info;
 
 typedef struct method_info {
@@ -161,25 +161,18 @@ typedef struct method_info {
 	u2				descriptor_index;
 	u2				attributes_count;
 	// attributes[attributes_count]
-	attribute_info	*attributes;
+	attribute_info	**attributes;
 } method_info;
 
-typedef struct attribute_info {
-	u2 attribute_name_index;
-	u4 attribute_length;
-	// info[attribute_length]
-	u1 *info;
-} attribute_info;
+
 
 typedef struct ConstantValue_attribute {
-	u2 attribute_name_index;
 	u4 attribute_length;
 	u2 constantvalue_index;
 } ConstantValue_attribute;
 
 typedef struct Code_attribute {
-	u2				attribute_name_index;
-	u4				attribute_length;
+	u4 attribute_length;
 	u2				max_stack;
 	u2				max_locals;
 	u4				code_length;
@@ -190,11 +183,10 @@ typedef struct Code_attribute {
 	exception_info	*exception_table;
 	u2				attributes_count;
 	// attributes[attributes_count]
-	attribute_info	*attributes;
+	attribute_info	**attributes;
 } Code_attribute;
 
 typedef struct Exceptions_attribute {
-	u2 attribute_name_index;
 	u4 attribute_length;
 	u2 number_of_exceptions;
 	// exception_index_table[number_of_exceptions]
@@ -202,44 +194,57 @@ typedef struct Exceptions_attribute {
 } Exceptions_attribute;
 
 typedef struct InnerClasses_attribute {
-	u2				attribute_name_index;
-	u4				attribute_length;
+	u4 attribute_length;
 	u2				number_of_classes;
 	// classes[number_of_classes]
 	classes_info	*classes;
 } InnerClasses_attribute;
 
 typedef struct Synthetic_attribute {
-	u2 attribute_name_index;
 	u4 attribute_length;
 } Synthetic_attribute;
 
 typedef struct SourceFile_attribute {
-	u2	attribute_name_index;
-	u4	attribute_length;
+	u4 attribute_length;
 	u2	sourcefile_index;
 } SourceFile_attribute;
 
 typedef struct LineNumberTable_attribute {
-	u2					attribute_name_index;
-	u4					attribute_length;
+	u4 attribute_length;
 	u2					line_number_table_length;
 	//line_number_table[line_number_table_length]
 	line_number_info	*line_number_table;
 } LineNumberTable_attribute;
 
 typedef struct LocalVariableTable_attribute {
-	u2						attribute_name_index;
-	u4						attribute_length;
+	u4 attribute_length;
 	u2						local_variable_table_length;
 	// local_variable_table[local_variable_table_length]
 	local_variable_info		*local_variable_table;
 } LocalVariableTable_attribute;
 
 typedef struct Deprecated_attribute {
-	u2	attribute_name_index;
-	u4	attribute_length;
+	u4 attribute_length;
 } Deprecated_attribute;
+
+
+typedef struct attribute_info {
+	u2 attribute_name_index;
+
+	// info[attribute_length]
+	//u1 *info;
+	union {
+		ConstantValue_attribute constantValue_info;
+		Code_attribute code_info;
+		Exceptions_attribute exceptions_info;
+		InnerClasses_attribute innerClasses_info;
+		Synthetic_attribute synthetic_info;
+		SourceFile_attribute sourceFile_info;
+		LineNumberTable_attribute lineNumberTable_info;
+		LocalVariableTable_attribute localVariable_info;
+		Deprecated_attribute deprecated_info;
+	} info;
+} attribute_info;
 
 typedef struct exception_info {
 	u2	start_pc;
