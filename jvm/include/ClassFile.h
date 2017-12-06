@@ -18,7 +18,7 @@ typedef struct line_number_info		line_number_info;
 typedef struct local_variable_info	local_variable_info;
 
 
-typedef struct ClassFile
+struct ClassFile
 {
 	u4				magic;
 	u2				minor_version;
@@ -41,9 +41,15 @@ typedef struct ClassFile
 	u2				attributes_count;
 	// attributes[attributes_count]
 	attribute_info	**attributes;
-} ClassFile;
+};
 
-
+enum AccessFlag {
+	ACC_PUBLIC = 0x0001,
+	ACC_FINAL = 0x0010,
+	ACC_SUPER = 0x0020,
+	ACC_INTERFACE = 0x0200,
+	ACC_ABSTRACT = 0x0400
+};
 
 enum ConstantType {
 	CONSTANT_Class = 7,

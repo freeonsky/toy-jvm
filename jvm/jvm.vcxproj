@@ -61,11 +61,13 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="src\ClassPrinter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\ClassFileReader.cpp" />
     <ClCompile Include="src\DataInputStream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ClassPrinter.h" />
     <ClInclude Include="include\ClassFile.h" />
     <ClInclude Include="include\ClassFileReader.h" />
     <ClInclude Include="include\DataInputStream.h" />

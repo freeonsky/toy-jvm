@@ -6,6 +6,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\ClassFileReader.cpp" />
+    <ClCompile Include="src\ClassPrinter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -16,5 +17,6 @@
     <ClInclude Include="include\ClassFile.h" />
     <ClInclude Include="include\DataInputStream.h" />
     <ClInclude Include="include\ClassFileReader.h" />
+    <ClInclude Include="include\ClassPrinter.h" />
   </ItemGroup>
 </Project>

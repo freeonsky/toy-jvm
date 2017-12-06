@@ -5,6 +5,7 @@
 
 #include "include/ClassFile.h"
 #include "include/ClassFileReader.h"
+#include "include/ClassPrinter.h"
 
 
 void printFile(std::istream & in) {
@@ -37,6 +38,7 @@ int main()
 	auto utf8info = cf->constant_pool[cf->constant_pool[cf->this_class - 1]->info.class_info.name_index - 1]->info.utf8_info;
 	std::cout << convertUtf8(utf8info.bytes, utf8info.length) << std::endl;
 
-	std::cout << "hell" << std::endl;
+	ClassPrinter cp;
+	cp.printClass(*cf);
     return 0;
 }

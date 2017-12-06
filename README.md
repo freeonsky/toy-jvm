@@ -10,11 +10,14 @@ a toy jvm written by cpp
 sudo apt-get install openssh-server g++ gdb gdbserver
 ```
 
-# TODO
-## 读取class格式文件到内存
+# 实现步骤
+## 类加载子系统
 * 定义class 文件格式中的各种数据结构，参考jvm specification
 * 读取class 文件到内存
+* 写一个类似javap的class文件解析器，能够正常解析class文件，用来验证类加载系统
 
-## 写一个类似javap的class文件解析器，能够正常解析class文件
+## 解释执行子系统
 
-## 解释执行class文件
+## runtime 
+* io 
+* net
