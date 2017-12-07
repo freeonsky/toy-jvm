@@ -34,9 +34,6 @@ int main()
 
 	ClassFileReader reader;
 	ClassFile *cf = reader.readClassFile(is);
-	std::cout << cf->magic << std::endl;
-	auto utf8info = cf->constant_pool[cf->constant_pool[cf->this_class - 1]->info.class_info.name_index - 1]->info.utf8_info;
-	std::cout << convertUtf8(utf8info.bytes, utf8info.length) << std::endl;
 
 	ClassPrinter cp;
 	cp.printClass(*cf);
