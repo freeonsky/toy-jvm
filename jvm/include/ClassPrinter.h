@@ -7,9 +7,13 @@ public:
 	ClassPrinter();
 	~ClassPrinter();
 	void printClass(ClassFile &cf);
-	std::string convertUtf8(u1* ch, u2 len);
-	std::string getAccessFlag(u2 accessFlag);
+	static std::string convertUtf8(u1* ch, u2 len);
+	std::string getClassAccessFlag(u2 accessFlag);
 	std::string getSuperClass(ClassFile &cf);
 	std::string getClassName(ClassFile &cf);
+	std::string getMethodAccessFlag(u2 accessFlag);
+	std::string getMethodName(ClassFile &cf, u2 nameIndex);
+	std::string getMethodReturnName(ClassFile &cf, u2 nameIndex);
+	std::string getMethodSign(ClassFile &cf, method_info &mi);
 };
 
