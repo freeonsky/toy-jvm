@@ -103,20 +103,106 @@ std::string ClassPrinter::getMethodName(ClassFile & cf, u2 nameIndex)
 	return std::move(getUtf8String(cf, nameIndex));
 }
 
+/*
+B 	byte 	signed byte
+C 	char 	Unicode character
+D 	double 	double-precision floating-point value
+F 	float 	single-precision floating-point value
+I 	int 	integer
+J 	long 	long integer
+L<classname>; 	reference 	an instance of class <classname>
+S 	short 	signed short
+Z 	boolean 	true or false
+[ 	reference 	one array dimension
+*/
+static std::string getDescriptorType(std::string str, int& i) {
+	std::map<char, std::string> hMap = {
+		{ 'B', "byte" },
+		{ 'C', "char" },
+		{ 'D', "double" },
+		{ 'F', "float" },
+		{ 'I', "int" },
+		{ 'J', "long" },
+		{ 'S', "short" },
+		{ 'Z', "boolean" },
+		{ 'V', "void" }
+	};
+
+	std::string mp;
+	while (i < str.length()) {
+		// 从第二个参数开始添加逗号
+		if (mp.size() >0) {
+			mp += ", ";
+		}
+		auto search = hMap.find(str[i]);
+		if (search != hMap.end()) {
+			mp += search->second;
+			i++;
+		}
+		else {
+			if (str[i] == 'L') {
+				auto referenceSeprator = str.find(";", i);
+				auto className = str.substr(i + 1, referenceSeprator - i - 1);
+				std::string::size_type pos = className.find("/");
+				while(pos != std::string::npos) {
+					className.replace(pos, 1, ".");
+					pos = className.find("/");
+				}
+				mp += className;
+				i = referenceSeprator + 1;
+			}
+			else if (str[i] == '[') {
+				int arrIndex = i;
+				while (str[arrIndex] == '[') {
+					arrIndex++;
+				}
+				std::string arrQuate = std::string(arrIndex - i, '[') + std::string(arrIndex - i, ']');
+				std::string type = getDescriptorType(str, arrIndex);
+				i = arrIndex;
+				type += arrQuate;
+				mp += type;
+			}
+			else {
+				i++;
+			}
+		}
+	}
+	return mp;
+}
+
 std::string ClassPrinter::getMethodReturnName(ClassFile & cf, u2 index)
 {
 	std::string descriptor = getUtf8String(cf, index);
 	auto right = descriptor.find(")");
-	auto rtype = descriptor.substr(right+1);
-	return std::move(rtype);
+	std::string rtype = descriptor.substr(right+1);
+	int i = 0;
+	return getDescriptorType(rtype, i);
+}
+
+
+
+std::string ClassPrinter::getMethodParameter(ClassFile & cf, u2 index)
+{
+	std::string descriptor = getUtf8String(cf, index);
+	auto right = descriptor.find(")");
+	
+	// 参数为空
+	if (right == 1) {
+		return "()";
+	}
+
+	std::string para = descriptor.substr(1, right - 1);
+	int i = 0;
+	return std::string("(") + getDescriptorType(para, i) + ")";
 }
 
 std::string ClassPrinter::getMethodSign(ClassFile & cf, method_info & mi)
 {
 	std::string ms;
 	ms += getMethodAccessFlag(mi.access_flags);
-	ms += getMethodReturnName(cf, mi.descriptor_index);
+	ms += getMethodReturnName(cf, mi.descriptor_index) + " ";
 	ms += getMethodName(cf, mi.name_index);
+	ms += getMethodParameter(cf, mi.descriptor_index);
 	return std::move(ms);
 }
 
@@ -167,7 +253,7 @@ void ClassPrinter::printClass(ClassFile &cf) {
 		methods += getMethodSign(cf, *mInfo) + "\n";
 	}
 
-	std::cout << accessFlag << thisClassName << superStri << " {"
+	std::cout << accessFlag << thisClassName << superStri << " {" << std::endl
 		<< methods
 
 		<< std::endl << "}"
