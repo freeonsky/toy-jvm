@@ -206,6 +206,20 @@ std::string ClassPrinter::getMethodSign(ClassFile & cf, method_info & mi)
 	return std::move(ms);
 }
 
+std::string ClassPrinter::getMethodCode(ClassFile & cf, method_info & mi)
+{
+	std::string codeStr;
+	for (int i = 0; i < mi.attributes_count; i++) {
+		std::string attrName = getUtf8String(cf, mi.attributes[i]->attribute_name_index);
+		if ("Code" == attrName) {
+			std::cout << "code";
+		}
+	}
+	return std::move(codeStr);
+}
+
+
+
 
 std::string ClassPrinter::getSuperClass(ClassFile & cf)
 {
@@ -232,11 +246,12 @@ std::string ClassPrinter::getClassName(ClassFile & cf)
 
 /*
 todo:
-1. get this class name
-2. get super class name
-3. get method
-4. get interface
-5. get fields
+* get this class name
+* get super class name
+* get method
+* print code
+* get interface
+* get fields
 */
 void ClassPrinter::printClass(ClassFile &cf) {
 	auto thisClassName = getClassName(cf);
@@ -251,6 +266,7 @@ void ClassPrinter::printClass(ClassFile &cf) {
 	for (int i = 0; i < cf.methods_count; i++) {
 		auto mInfo = cf.methods[i];
 		methods += getMethodSign(cf, *mInfo) + "\n";
+		methods += getMethodCode(cf, *mInfo) + "\n";
 	}
 
 	std::cout << accessFlag << thisClassName << superStri << " {" << std::endl
