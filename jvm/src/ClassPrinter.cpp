@@ -212,7 +212,12 @@ std::string ClassPrinter::getMethodCode(ClassFile & cf, method_info & mi)
 	for (int i = 0; i < mi.attributes_count; i++) {
 		std::string attrName = getUtf8String(cf, mi.attributes[i]->attribute_name_index);
 		if ("Code" == attrName) {
-			std::cout << "code";
+			std::cout << "code is:\n";
+			u1 *code = mi.attributes[i]->info.code_info.code;
+			for (auto j = 0; j < mi.attributes[i]->info.code_info.code_length; j++) {
+				std::cout << OP_CODE_ARRAY[code[j]] << std::endl;
+			}
+			
 		}
 	}
 	return std::move(codeStr);
