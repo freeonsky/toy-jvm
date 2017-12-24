@@ -18,5 +18,6 @@
     <ClInclude Include="include\DataInputStream.h" />
     <ClInclude Include="include\ClassFileReader.h" />
     <ClInclude Include="include\ClassPrinter.h" />
+    <ClInclude Include="include\StackFrame.h" />
   </ItemGroup>
 </Project>

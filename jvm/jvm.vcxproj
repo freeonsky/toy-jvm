@@ -71,6 +71,7 @@
     <ClInclude Include="include\ClassFile.h" />
     <ClInclude Include="include\ClassFileReader.h" />
     <ClInclude Include="include\DataInputStream.h" />
+    <ClInclude Include="include\StackFrame.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

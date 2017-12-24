@@ -208,19 +208,23 @@ std::string ClassPrinter::getMethodSign(ClassFile & cf, method_info & mi)
 
 std::string ClassPrinter::getMethodCode(ClassFile & cf, method_info & mi)
 {
-	std::string codeStr;
+	std::stringstream st;
 	for (int i = 0; i < mi.attributes_count; i++) {
 		std::string attrName = getUtf8String(cf, mi.attributes[i]->attribute_name_index);
 		if ("Code" == attrName) {
-			std::cout << "code is:\n";
-			u1 *code = mi.attributes[i]->info.code_info.code;
-			for (auto j = 0; j < mi.attributes[i]->info.code_info.code_length; j++) {
-				std::cout << OP_CODE_ARRAY[code[j]] << std::endl;
-			}
+			auto codeInfo = mi.attributes[i]->info.code_info;
 			
+			st << "max_locals:"
+			   << codeInfo.max_locals << "\n"
+				<< "max_stack:" << codeInfo.max_stack << "\n"
+				<< "code is:" << "\n";
+			u1 *code = codeInfo.code;
+			for (auto j = 0; j < mi.attributes[i]->info.code_info.code_length; j++) {
+				st << OP_CODE_ARRAY[code[j]] << "\n";
+			}
 		}
 	}
-	return std::move(codeStr);
+	return st.str();
 }
 
 
@@ -270,8 +274,8 @@ void ClassPrinter::printClass(ClassFile &cf) {
 	std::string methods;
 	for (int i = 0; i < cf.methods_count; i++) {
 		auto mInfo = cf.methods[i];
-		methods += getMethodSign(cf, *mInfo) + "\n";
-		methods += getMethodCode(cf, *mInfo) + "\n";
+		methods += getMethodSign(cf, *mInfo) + "\n{\n";
+		methods += getMethodCode(cf, *mInfo) + "\n}\n";
 	}
 
 	std::cout << accessFlag << thisClassName << superStri << " {" << std::endl
