@@ -1,23 +1,9 @@
 # toy-jvm
 a toy jvm written by cpp
 
-## 使用工具
-### visual studio 2017 community
-创建cross platform 工程，程序跑在linux系统，在windows系统用visual studio 2017远程调试。
-### linux 操作系统，需要安装（openssh-server g++ gdb gdbserver）
-```
-以ubuntu 16.04为例
-sudo apt-get install openssh-server g++ gdb gdbserver
-```
 
-# 实现步骤
-## 类加载子系统
-* 定义class 文件格式中的各种数据结构，参考jvm specification
-* 读取class 文件到内存
-* 写一个类似javap的class文件解析器，能够正常解析class文件，用来验证类加载系统
+## build
+本项目使用 visual studio 2017 comminity工具， 创建cross platform 工程，程序跑在linux系统，在windows系统用visual studio 2017远程调试。
+1. download/clone代码后，直接用 visual studio 2017 community 打开 jvm.sln解决方案文件
+2. 调试执行需要配置linux环境，建议使用 ubuntu 16.04版本，需要安装 `sudo apt-get install openssh-server g++ gdb gdbserver` 软件包
 
-## 解释执行子系统
-
-## runtime 
-* io 
-* net

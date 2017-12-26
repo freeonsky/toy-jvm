@@ -4,8 +4,8 @@
 class StackFrame {
 private:
 	int pc;
-	int locals[];
-	int stack[];
+	int *locals;
+	int *stack;
 public:
 	StackFrame(int maxLocals, int stackSize) {
 		pc = 0;
