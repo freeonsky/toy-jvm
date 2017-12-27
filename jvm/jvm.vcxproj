@@ -65,12 +65,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\ClassFileReader.cpp" />
     <ClCompile Include="src\DataInputStream.cpp" />
+    <ClCompile Include="src\Instance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ClassPrinter.h" />
     <ClInclude Include="include\ClassFile.h" />
     <ClInclude Include="include\ClassFileReader.h" />
     <ClInclude Include="include\DataInputStream.h" />
+    <ClInclude Include="include\Instance.h" />
     <ClInclude Include="include\StackFrame.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
