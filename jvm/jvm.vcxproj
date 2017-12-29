@@ -61,6 +61,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="src\Heap.cpp" />
     <ClCompile Include="src\ClassPrinter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\ClassFileReader.cpp" />
@@ -68,6 +69,7 @@
     <ClCompile Include="src\Instance.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Heap.h" />
     <ClInclude Include="include\ClassPrinter.h" />
     <ClInclude Include="include\ClassFile.h" />
     <ClInclude Include="include\ClassFileReader.h" />
