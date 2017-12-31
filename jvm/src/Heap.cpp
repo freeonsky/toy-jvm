@@ -16,9 +16,11 @@ Heap& Heap::singleton(unsigned int mx, unsigned int ms)
 
 MemSize Heap::newFunc(ClassFile & cf)
 {
+
 	return MemSize();
 }
 
 Heap::~Heap()
 {
+	delete[] this->heap;
 }

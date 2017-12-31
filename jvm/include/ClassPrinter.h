@@ -228,6 +228,10 @@ public:
 	std::string getMethodParameter(ClassFile &cf, u2 nameIndex);
 	std::string getMethodSign(ClassFile &cf, method_info &mi);
 	std::string getMethodCode(ClassFile &cf, method_info &mi);
+
+	std::string getFieldAccessFlag(u2 accessFlag);
+	std::string getFieldDescriptor(ClassFile &cf, field_info &fInfo);
+	std::string getFieldName(ClassFile &cf, u2 nameIndex);
 };
 
 #endif

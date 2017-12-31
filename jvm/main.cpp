@@ -7,11 +7,12 @@
 #include "include/ClassFileReader.h"
 #include "include/ClassPrinter.h"
 
-
+/*
 void printFile(std::istream & in) {
 	while(in.eof())
 	u1 by = in.get();
 }
+*/
 
 std::string convertUtf8(u1* ch, u2 len) {
 	char * by = new char[len+1];

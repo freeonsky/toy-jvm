@@ -115,7 +115,7 @@ S 	short 	signed short
 Z 	boolean 	true or false
 [ 	reference 	one array dimension
 */
-static std::string getDescriptorType(std::string str, int& i) {
+static std::string getDescriptorType(std::string str, unsigned int& i) {
 	std::map<char, std::string> hMap = {
 		{ 'B', "byte" },
 		{ 'C', "char" },
@@ -149,10 +149,10 @@ static std::string getDescriptorType(std::string str, int& i) {
 					pos = className.find("/");
 				}
 				mp += className;
-				i = referenceSeprator + 1;
+				i = (unsigned int)(referenceSeprator + 1);
 			}
 			else if (str[i] == '[') {
-				int arrIndex = i;
+				unsigned int arrIndex = i;
 				while (str[arrIndex] == '[') {
 					arrIndex++;
 				}
@@ -175,7 +175,7 @@ std::string ClassPrinter::getMethodReturnName(ClassFile & cf, u2 index)
 	std::string descriptor = getUtf8String(cf, index);
 	auto right = descriptor.find(")");
 	std::string rtype = descriptor.substr(right+1);
-	int i = 0;
+	unsigned int i = 0;
 	return getDescriptorType(rtype, i);
 }
 
@@ -192,7 +192,7 @@ std::string ClassPrinter::getMethodParameter(ClassFile & cf, u2 index)
 	}
 
 	std::string para = descriptor.substr(1, right - 1);
-	int i = 0;
+	unsigned int i = 0;
 	return std::string("(") + getDescriptorType(para, i) + ")";
 }
 
@@ -219,12 +219,54 @@ std::string ClassPrinter::getMethodCode(ClassFile & cf, method_info & mi)
 				<< "max_stack:" << codeInfo.max_stack << "\n"
 				<< "code is:" << "\n";
 			u1 *code = codeInfo.code;
-			for (auto j = 0; j < mi.attributes[i]->info.code_info.code_length; j++) {
+			for (unsigned int j = 0; j < mi.attributes[i]->info.code_info.code_length; j++) {
 				st << OP_CODE_ARRAY[code[j]] << "\n";
 			}
 		}
 	}
 	return st.str();
+}
+
+/*
+Flag Name 		Value 	Interpretation
+ACC_PUBLIC 		0x0001 	Declared public; may be accessed from outside its package.
+ACC_PRIVATE 	0x0002 	Declared private; usable only within the defining class.
+ACC_PROTECTED 	0x0004 	Declared protected; may be accessed within subclasses.
+ACC_STATIC 		0x0008 	Declared static.
+ACC_FINAL 		0x0010 	Declared final; no further assignment after initialization.
+ACC_VOLATILE 	0x0040 	Declared volatile; cannot be cached.
+ACC_TRANSIENT 	0x0080 	Declared transient; not written or read by a persistent object manager.
+*/
+std::string ClassPrinter::getFieldAccessFlag(u2 accessFlag)
+{
+	std::map<u2, std::string> hashMap = {
+	{ 0x0001 , "public " },
+	{ 0x0002 , "private " },
+	{ 0x0004 , "protected " },
+	{ 0x0008 , "static " },
+	{ 0x0010 , "final " },
+	{ 0x0040 , "volatile " },
+	{ 0x0080 , "transient " }
+
+	};
+	std::string ss;
+	for (auto item : hashMap) {
+		if ((accessFlag & item.first) != 0) {
+			ss += item.second;
+		}
+	}
+
+	return std::move(ss);
+}
+
+std::string ClassPrinter::getFieldDescriptor(ClassFile & cf, field_info & fInfo)
+{
+	return std::move(getUtf8String(cf, fInfo.descriptor_index));
+}
+
+std::string ClassPrinter::getFieldName(ClassFile & cf, u2 nameIndex)
+{
+	return std::move(getUtf8String(cf, nameIndex));
 }
 
 
@@ -259,13 +301,14 @@ todo:
 * get super class name
 * get method
 * print code
-* get interface
 * get fields
+* get interface
 */
 void ClassPrinter::printClass(ClassFile &cf) {
 	auto thisClassName = getClassName(cf);
 	auto superClassName = getSuperClass(cf);
 	auto accessFlag = getClassAccessFlag(cf.access_flags);
+	
 	std::string superStri;
 	if (superClassName != "java/lang/Object") {
 		superStri += " extend " + superClassName;
@@ -278,9 +321,20 @@ void ClassPrinter::printClass(ClassFile &cf) {
 		methods += getMethodCode(cf, *mInfo) + "\n}\n";
 	}
 
+	std::string fields;
+	for (int i = 0; i < cf.fields_count; i++) {
+		field_info* fInfo = cf.fields[i];
+		fields += getFieldAccessFlag(fInfo->access_flags);
+		fields += getFieldDescriptor(cf, *fInfo) + " ";
+		fields += getFieldName(cf, fInfo->name_index);
+		fields += "\n";
+	}
+
 	std::cout << accessFlag << thisClassName << superStri << " {" << std::endl
 		<< methods
-
-		<< std::endl << "}"
+		<< std::endl
+		<< fields
+		<< std::endl
+		<< "}"
 		<< std::endl;
 }

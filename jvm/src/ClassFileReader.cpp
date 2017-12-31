@@ -52,7 +52,7 @@ static cp_info * readCpInfo(DataInputStream &dis) {
 	return info;
 }
 
-bool utf8Equals(u1 *src, char * expected) {
+bool utf8Equals(u1 *src, const char * expected) {
 	bool flag = true;
 	int i = 0;
 	while (expected[i]) {
@@ -79,7 +79,7 @@ static attribute_info* readAttributeInfo(DataInputStream &dis, ClassFile * cf) {
 		
 		info->info.code_info.code_length = dis.readU4();
 		info->info.code_info.code = new u1[info->info.code_info.code_length];
-		for (int i = 0; i < info->info.code_info.code_length; i++) {
+		for (unsigned int i = 0; i < info->info.code_info.code_length; i++) {
 			info->info.code_info.code[i] = dis.readU1();
 		}
 
