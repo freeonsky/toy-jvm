@@ -4,27 +4,9 @@
 #include <iostream>
 
 #include "../include/ClassPrinter.h"
+#include "../include/ClassUtil.h"
 
 
-
-ClassPrinter::ClassPrinter()
-{
-}
-
-
-ClassPrinter::~ClassPrinter()
-{
-}
-
-std::string ClassPrinter::convertUtf8(u1* ch, u2 len) {
-	char * by = new char[len + 1];
-	for (int i = 0; i < len; i++) {
-		by[i] = ch[i];
-	}
-	by[len] = '\0';
-	std::string str(by);
-	return std::move(str);
-}
 
 
 /**
@@ -94,7 +76,7 @@ std::string ClassPrinter::getMethodAccessFlag(u2 accessFlag)
 
 static std::string getUtf8String(ClassFile & cf, u2 nameIndex) {
 	auto utf8Info = cf.constant_pool[nameIndex - 1]->info.utf8_info;
-	auto name = ClassPrinter::convertUtf8(utf8Info.bytes, utf8Info.length);
+	auto name = ClassUtil::convertUtf8ToString(utf8Info.bytes, utf8Info.length);
 	return std::move(name);
 }
 
@@ -277,7 +259,7 @@ std::string ClassPrinter::getSuperClass(ClassFile & cf)
 	if (cf.super_class != 0) {
 		auto superClassInfo = cf.constant_pool[cf.super_class - 1]->info.class_info;
 		auto utf8Info = cf.constant_pool[superClassInfo.name_index - 1]->info.utf8_info;
-		auto name = convertUtf8(utf8Info.bytes, utf8Info.length);
+		auto name = ClassUtil::convertUtf8ToString(utf8Info.bytes, utf8Info.length);
 		return std::move(name);
 	}
 	else {
@@ -289,7 +271,7 @@ std::string ClassPrinter::getClassName(ClassFile & cf)
 {
 	auto thisClassInfo = cf.constant_pool[cf.this_class - 1]->info.class_info;
 	auto utf8Info = cf.constant_pool[thisClassInfo.name_index - 1]->info.utf8_info;
-	std::string thisClassName = convertUtf8(utf8Info.bytes, utf8Info.length);
+	std::string thisClassName = ClassUtil::convertUtf8ToString(utf8Info.bytes, utf8Info.length);
 	return std::move(thisClassName);
 }
 

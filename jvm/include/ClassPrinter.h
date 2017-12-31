@@ -215,10 +215,10 @@ static std::string OP_CODE_ARRAY[] = {
 class ClassPrinter
 {
 public:
-	ClassPrinter();
-	~ClassPrinter();
+	ClassPrinter() = default;
+	~ClassPrinter() = default;
 	void printClass(ClassFile &cf);
-	static std::string convertUtf8(u1* ch, u2 len);
+	
 	std::string getClassAccessFlag(u2 accessFlag);
 	std::string getSuperClass(ClassFile &cf);
 	std::string getClassName(ClassFile &cf);

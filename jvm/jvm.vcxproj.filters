@@ -9,6 +9,7 @@
     <ClCompile Include="src\ClassPrinter.cpp" />
     <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Heap.cpp" />
+    <ClCompile Include="src\ClassUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -23,5 +24,6 @@
     <ClInclude Include="include\StackFrame.h" />
     <ClInclude Include="include\Instance.h" />
     <ClInclude Include="include\Heap.h" />
+    <ClInclude Include="include\ClassUtil.h" />
   </ItemGroup>
 </Project>
