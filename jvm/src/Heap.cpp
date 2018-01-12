@@ -4,7 +4,7 @@
 
 Heap::Heap(unsigned int mx, unsigned int ms):mx(mx),ms(ms), usage(0)
 {
-	this->heap = new int[ms];
+	this->heap = operator new(ms);
 }
 
 
@@ -45,6 +45,6 @@ MemStruct Heap::getMemStruct(unsigned int index)
 
 Heap::~Heap()
 {
-	delete[] this->heap;
+	delete this->heap;
 }
 

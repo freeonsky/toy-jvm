@@ -4,7 +4,7 @@
 #include "ClassFile.h"
 
 union referenced {
-	unsigned int length; // 目的是让isReference占用1个slot
+	uint16_t length; // 目的是让isReference占用1个slot
 	bool flag;
 };
 
@@ -12,10 +12,10 @@ union referenced {
 // size 最小是2，分别是：size,和指向ClassFile class定义的指针。
 // {size, ClassFilePointer, isReference, fieldCount, fields}
 struct MemStruct {
-	unsigned int size;
+	uint32_t size;
 	ClassFile* classFilePointer;
 	referenced isReference;
-	unsigned int fieldCount;
+	uint16_t fieldCount;
 	void * fields;
 };
 
