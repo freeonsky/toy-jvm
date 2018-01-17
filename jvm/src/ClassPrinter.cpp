@@ -112,7 +112,7 @@ static std::string getDescriptorType(std::string str, unsigned int& i) {
 
 	std::string mp;
 	while (i < str.length()) {
-		// 从第二个参数开始添加逗号
+		// 浠庣浜屼釜鍙傛暟寮�濮嬫坊鍔犻�楀彿
 		if (mp.size() >0) {
 			mp += ", ";
 		}
@@ -168,7 +168,7 @@ std::string ClassPrinter::getMethodParameter(ClassFile & cf, u2 index)
 	std::string descriptor = getUtf8String(cf, index);
 	auto right = descriptor.find(")");
 	
-	// 参数为空
+	// 鍙傛暟涓虹┖
 	if (right == 1) {
 		return "()";
 	}

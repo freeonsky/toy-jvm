@@ -1,10 +1,10 @@
 #include "ClassFile.h"
 #include <string>
-// ÀàÊµÀı»¯ºóÔÚÄÚ´æÖĞµÄ³éÏó
+// ç±»å®ä¾‹åŒ–ååœ¨å†…å­˜ä¸­çš„æŠ½è±¡
 class Instance
 {
 public:
-	// »ñÈ¡ÊµÀıµÄ¶¨Òå
+	// è·å–å®ä¾‹çš„å®šä¹‰
 	virtual ClassFile* getClassFile();
 
 	Instance();

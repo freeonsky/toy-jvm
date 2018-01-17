@@ -14,6 +14,7 @@ int main()
 	std::filebuf fin;
 	if (!fin.open(path, std::ios::in)) {
 		std::cout << "fail to pen file" << std::endl;
+		exit(1);
 	}
 	std::istream is(&fin);
 

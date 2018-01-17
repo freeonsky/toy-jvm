@@ -9,6 +9,8 @@ SET(SRC_LIST main.cpp
     src/Instance.cpp
 )
 
+SET(CMAKE_BUILD_TYPE Debug)
+
 ADD_EXECUTABLE(
     tjvm ${SRC_LIST}    
 )

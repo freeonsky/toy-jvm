@@ -14,11 +14,11 @@ Heap& Heap::singleton(unsigned int mx, unsigned int ms)
 	return instance;
 }
 
-// ÔÚheap´´½¨Ò»¸ö¶ÔÏó£¬·µ»Ø´Ë¶ÔÏóµÄ¾ä±ú£¨ÔÚheapÖĞµÄË÷Òı£©
-// jvm¹æ·¶»ù±¾ÀàĞÍ£¨byte,bool,char,short,int,float ¶¼Õ¼ÓÃ1¸öslot£»double,longÕ¼ÓÃ2¸öslot£©,ÒıÓÃÀàĞÍÕ¼ÓÃ1¸öslot.
-// ¼ò»¯¿ª·¢£¬Ã¿ÖÖÀàĞÍ¶¼Õ¼ÓÃ1¸öslot;
-// ¶ÔÏóÔÚheapÖĞµÄ²¼¾Ö£º {size, ClassFilePointer, isReference, fieldCount, fields}
-// ÕâÑùÕ¼ÓÃµÄ×ÜÊıÁ¿= size(1) + ClassFilePointer(1) + isReference(1) + fieldCount(1) + fields
+// åœ¨heapåˆ›å»ºä¸€ä¸ªå¯¹è±¡ï¼Œè¿”å›æ­¤å¯¹è±¡çš„å¥æŸ„ï¼ˆåœ¨heapä¸­çš„ç´¢å¼•ï¼‰
+// jvmè§„èŒƒåŸºæœ¬ç±»å‹ï¼ˆbyte,bool,char,short,int,float éƒ½å ç”¨1ä¸ªslotï¼›double,longå ç”¨2ä¸ªslotï¼‰,å¼•ç”¨ç±»å‹å ç”¨1ä¸ªslot.
+// ç®€åŒ–å¼€å‘ï¼Œæ¯ç§ç±»å‹éƒ½å ç”¨1ä¸ªslot;
+// å¯¹è±¡åœ¨heapä¸­çš„å¸ƒå±€ï¼š {size, ClassFilePointer, isReference, fieldCount, fields}
+// è¿™æ ·å ç”¨çš„æ€»æ•°é‡= size(1) + ClassFilePointer(1) + isReference(1) + fieldCount(1) + fields
 unsigned int Heap::newFunc(ClassFile & cf)
 {
 	unsigned int start = usage;

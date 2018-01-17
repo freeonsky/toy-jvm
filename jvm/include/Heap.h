@@ -4,12 +4,12 @@
 #include "ClassFile.h"
 
 union referenced {
-	uint16_t length; // Ä¿µÄÊÇÈÃisReferenceÕ¼ÓÃ1¸öslot
+	uint16_t length; // ç›®çš„æ˜¯è®©isReferenceå ç”¨1ä¸ªslot
 	bool flag;
 };
 
-// Heap new ·½·¨·ÖÅäµÄ½á¹û 
-// size ×îĞ¡ÊÇ2£¬·Ö±ğÊÇ£ºsize,ºÍÖ¸ÏòClassFile class¶¨ÒåµÄÖ¸Õë¡£
+// Heap new æ–¹æ³•åˆ†é…çš„ç»“æœ 
+// size æœ€å°æ˜¯2ï¼Œåˆ†åˆ«æ˜¯ï¼šsize,å’ŒæŒ‡å‘ClassFile classå®šä¹‰çš„æŒ‡é’ˆã€‚
 // {size, ClassFilePointer, isReference, fieldCount, fields}
 struct MemStruct {
 	uint32_t size;
@@ -19,9 +19,9 @@ struct MemStruct {
 	void * fields;
 };
 
-// ¶Ñ£¬ËùÓĞnew¹Ø¼ü×Ö´´½¨µÄ¶ÔÏó¶¼´Ó¶ÑÖĞ°´Ë³Ğò·ÖÅä.
-// Heap ÊÇÒ»¸öµ¥Àı¶ÔÏó£¬ÔÚ´´½¨ singleton(unsigned int mx, unsigned int ms) Ê±Ö¸¶¨×î´óÄÚ´æ£¬ÆğÊ¼ÄÚ´æ
-// newFunc º¯Êı¶ÔÓ¦new¹Ø¼ü×Ö£¬ÓÃÀ´´ÓHeap·ÖÅäÄÚ´æ£¬·ÖÅäµÄÄÚ´æÓÃ MemSize À´±íÊ¾
+// å †ï¼Œæ‰€æœ‰newå…³é”®å­—åˆ›å»ºçš„å¯¹è±¡éƒ½ä»å †ä¸­æŒ‰é¡ºåºåˆ†é….
+// Heap æ˜¯ä¸€ä¸ªå•ä¾‹å¯¹è±¡ï¼Œåœ¨åˆ›å»º singleton(unsigned int mx, unsigned int ms) æ—¶æŒ‡å®šæœ€å¤§å†…å­˜ï¼Œèµ·å§‹å†…å­˜
+// newFunc å‡½æ•°å¯¹åº”newå…³é”®å­—ï¼Œç”¨æ¥ä»Heapåˆ†é…å†…å­˜ï¼Œåˆ†é…çš„å†…å­˜ç”¨ MemSize æ¥è¡¨ç¤º
 class Heap
 {
 private:
@@ -30,22 +30,22 @@ private:
 	Heap& operator=(const Heap&) = default;
 	unsigned int mx;
 	unsigned int ms;
-	// Ä¬ÈÏÖµÊÇ0£¬±íÊ¾HeapÖĞµÄÄÚ´æ»¹Ã»ÓĞ±»Ê¹ÓÃ,Ã¿´Îµ÷ÓÃ newFunc£¬usageµÄÖµÔö¼Ó·ÖÅäÄÚ´ælength£»
+	// é»˜è®¤å€¼æ˜¯0ï¼Œè¡¨ç¤ºHeapä¸­çš„å†…å­˜è¿˜æ²¡æœ‰è¢«ä½¿ç”¨,æ¯æ¬¡è°ƒç”¨ newFuncï¼Œusageçš„å€¼å¢åŠ åˆ†é…å†…å­˜lengthï¼›
 	unsigned int usage;
 	void * heap;
 
 public:
-	// Heap ÊÇÒ»¸öµ¥Àı¶ÔÏó£¬ÔÚ´´½¨ singleton(unsigned int mx, unsigned int ms) Ê±Ö¸¶¨×î´óÄÚ´æ£¬ÆğÊ¼ÄÚ´æ
+	// Heap æ˜¯ä¸€ä¸ªå•ä¾‹å¯¹è±¡ï¼Œåœ¨åˆ›å»º singleton(unsigned int mx, unsigned int ms) æ—¶æŒ‡å®šæœ€å¤§å†…å­˜ï¼Œèµ·å§‹å†…å­˜
 	static Heap& singleton(unsigned int mx, unsigned int ms);
 
-	// ÔÚheap´´½¨Ò»¸ö¶ÔÏó£¬·µ»Ø´Ë¶ÔÏóµÄ¾ä±ú£¨ÔÚheapÖĞµÄË÷Òı£©
-	// jvm¹æ·¶»ù±¾ÀàĞÍ£¨byte,bool,char,short,int,float ¶¼Õ¼ÓÃ1¸öslot£»double,longÕ¼ÓÃ2¸öslot£©,ÒıÓÃÀàĞÍÕ¼ÓÃ1¸öslot.
-	// ¼ò»¯¿ª·¢£¬Ã¿ÖÖÀàĞÍ¶¼Õ¼ÓÃ1¸öslot;
-	// ¶ÔÏóÔÚheapÖĞµÄ²¼¾Ö£º {size, ClassFilePointer, isReference, fieldCount, fields}
-	// ÕâÑùÕ¼ÓÃµÄ×ÜÊıÁ¿= size(1) + ClassFilePointer(1) + isReference(1) + fieldCount(1) + fields
+	// åœ¨heapåˆ›å»ºä¸€ä¸ªå¯¹è±¡ï¼Œè¿”å›æ­¤å¯¹è±¡çš„å¥æŸ„ï¼ˆåœ¨heapä¸­çš„ç´¢å¼•ï¼‰
+	// jvmè§„èŒƒåŸºæœ¬ç±»å‹ï¼ˆbyte,bool,char,short,int,float éƒ½å ç”¨1ä¸ªslotï¼›double,longå ç”¨2ä¸ªslotï¼‰,å¼•ç”¨ç±»å‹å ç”¨1ä¸ªslot.
+	// ç®€åŒ–å¼€å‘ï¼Œæ¯ç§ç±»å‹éƒ½å ç”¨1ä¸ªslot;
+	// å¯¹è±¡åœ¨heapä¸­çš„å¸ƒå±€ï¼š {size, ClassFilePointer, isReference, fieldCount, fields}
+	// è¿™æ ·å ç”¨çš„æ€»æ•°é‡= size(1) + ClassFilePointer(1) + isReference(1) + fieldCount(1) + fields
 	unsigned int newFunc(ClassFile &cf);
 	
-	// ¸ù¾İ¾ä±ú»ñÈ¡heapÖĞµÄ½á¹¹
+	// æ ¹æ®å¥æŸ„è·å–heapä¸­çš„ç»“æ„
 	MemStruct getMemStruct(unsigned int index);
 	~Heap();
 };

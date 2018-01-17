@@ -15,7 +15,7 @@ public:
 	static int16_t getShortField(std::string fieldName);
 	static int32_t getIntField(std::string fieldName);
 	static int64_t getLongField(std::string fieldName);
-	// todo ¸¡µãÊı¼ÆËã±È½Ï¸´ÔÓ£¬ÔİÊ±ÓÃc++ »ù±¾Êı¾İÀàĞÍ´úÌæ£¬ÔÚ64Î»»·¾³ÏÂ£¬floatÊÇ64Î»
+	// todo æµ®ç‚¹æ•°è®¡ç®—æ¯”è¾ƒå¤æ‚ï¼Œæš‚æ—¶ç”¨c++ åŸºæœ¬æ•°æ®ç±»å‹ä»£æ›¿ï¼Œåœ¨64ä½ç¯å¢ƒä¸‹ï¼Œfloatæ˜¯64ä½
 	static float getFloatField(std::string fieldName);
 	static double getDoubleField(std::string fieldName);
 	static bool getBoolField(std::string fieldName);

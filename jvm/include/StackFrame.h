@@ -1,9 +1,9 @@
 #ifndef STACK_FRAME_H
 #define STACK_FRAME_H
 
-// stackFrame±ØĞëµÄ»ù±¾ĞÅÏ¢£º currentMethodName, currentClassInstance, ¾Ö²¿±äÁ¿±í£¬
-//                            ²Ù×÷ÊıÕ»£¬pc(³ÌĞò¼ÆÊıÆ÷)£¬Õ»µÄ×î´ó¸ß¶È
-// currentMethodName: ±ØĞë°üº¬Ãû³Æ¡¢·µ»ØÖµ¡¢²ÎÊı£¬Ö±½ÓÊ¹ÓÃclassfile¶¨ÒåµÄÖµ
+// stackFrameå¿…é¡»çš„åŸºæœ¬ä¿¡æ¯ï¼š currentMethodName, currentClassInstance, å±€éƒ¨å˜é‡è¡¨ï¼Œ
+//                            æ“ä½œæ•°æ ˆï¼Œpc(ç¨‹åºè®¡æ•°å™¨)ï¼Œæ ˆçš„æœ€å¤§é«˜åº¦
+// currentMethodName: å¿…é¡»åŒ…å«åç§°ã€è¿”å›å€¼ã€å‚æ•°ï¼Œç›´æ¥ä½¿ç”¨classfileå®šä¹‰çš„å€¼
 class StackFrame {
 private:
 	int pc;
