@@ -22,11 +22,11 @@ Heap& Heap::singleton(unsigned int mx, unsigned int ms)
 unsigned int Heap::newFunc(ClassFile & cf)
 {
 	unsigned int start = usage;
-
+	/*
 	void* p = this->heap + usage;
 	*(unsigned int *)(p) = 4 + cf.fields_count;
 	//*(ClassFile*)(p + 1) = &cf;
-
+	*/
 	usage = 4 + cf.fields_count;
 	return start;
 }
@@ -34,12 +34,14 @@ unsigned int Heap::newFunc(ClassFile & cf)
 MemStruct Heap::getMemStruct(unsigned int index)
 {
 	MemStruct ms;
+	/*
 	void* p = this->heap;
 	ms.size = *(unsigned int *)(p + index);
 	ms.classFilePointer = (ClassFile*)(p + index + 1);
 	ms.isReference = *(referenced*)(p + index + 2);
 	ms.fieldCount = *(unsigned int*)(p + index + 3);
 	ms.fields = p + index + 4;
+	*/
 	return ms;
 }
 
