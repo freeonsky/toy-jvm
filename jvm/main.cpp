@@ -11,9 +11,9 @@
 
 int main(int argc, char** argv)
 {
-	// ÊµÏÖjavap¹¦ÄÜ
-	// ÓÃ·¨£º jtvm print [path]
-	// Àı×Ó£º jtvm print /home/zft/projects/Test.class
+	// å®ç°javapåŠŸèƒ½
+	// ç”¨æ³•ï¼š jtvm print [path]
+	// ä¾‹å­ï¼š jtvm print /home/zft/projects/Test.class
 	if (argc == 3 && strcmp("print", argv[1])) {
 		std::string path("/home/zft/projects/Test.class");
 		std::filebuf fin;
